@@ -15,6 +15,11 @@
 		75942B2F1BED0D3A008A99F7 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 75942B2D1BED0D3A008A99F7 /* LaunchScreen.storyboard */; };
 		75942B3A1BED0D3A008A99F7 /* YHStarRatingDemoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 75942B391BED0D3A008A99F7 /* YHStarRatingDemoTests.m */; };
 		75942B451BED0D3A008A99F7 /* YHStarRatingDemoUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 75942B441BED0D3A008A99F7 /* YHStarRatingDemoUITests.m */; };
+		75F9B09520D2654F00A198A4 /* StarRatingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 75F9B09420D2654F00A198A4 /* StarRatingView.m */; };
+		75F9B09720D2690200A198A4 /* star.png in Resources */ = {isa = PBXBuildFile; fileRef = 75F9B09620D2690200A198A4 /* star.png */; };
+		75F9B09920D2690900A198A4 /* grayStar.png in Resources */ = {isa = PBXBuildFile; fileRef = 75F9B09820D2690900A198A4 /* grayStar.png */; };
+		75F9B09C20D2734900A198A4 /* StarLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 75F9B09B20D2734900A198A4 /* StarLayer.m */; };
+		75F9B09F20D2788400A198A4 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 75F9B09E20D2788400A198A4 /* CoreText.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,6 +56,13 @@
 		75942B401BED0D3A008A99F7 /* YHStarRatingDemoUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = YHStarRatingDemoUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		75942B441BED0D3A008A99F7 /* YHStarRatingDemoUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YHStarRatingDemoUITests.m; sourceTree = "<group>"; };
 		75942B461BED0D3A008A99F7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		75F9B09320D2654F00A198A4 /* StarRatingView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = StarRatingView.h; sourceTree = "<group>"; };
+		75F9B09420D2654F00A198A4 /* StarRatingView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = StarRatingView.m; sourceTree = "<group>"; };
+		75F9B09620D2690200A198A4 /* star.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = star.png; sourceTree = "<group>"; };
+		75F9B09820D2690900A198A4 /* grayStar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = grayStar.png; sourceTree = "<group>"; };
+		75F9B09A20D2734900A198A4 /* StarLayer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = StarLayer.h; sourceTree = "<group>"; };
+		75F9B09B20D2734900A198A4 /* StarLayer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = StarLayer.m; sourceTree = "<group>"; };
+		75F9B09E20D2788400A198A4 /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,6 +70,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				75F9B09F20D2788400A198A4 /* CoreText.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -85,6 +98,7 @@
 				75942B381BED0D3A008A99F7 /* YHStarRatingDemoTests */,
 				75942B431BED0D3A008A99F7 /* YHStarRatingDemoUITests */,
 				75942B1D1BED0D3A008A99F7 /* Products */,
+				75F9B09D20D2788300A198A4 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -107,9 +121,15 @@
 				75942B261BED0D3A008A99F7 /* ViewController.m */,
 				75942B281BED0D3A008A99F7 /* Main.storyboard */,
 				75942B2B1BED0D3A008A99F7 /* Assets.xcassets */,
+				75F9B09620D2690200A198A4 /* star.png */,
+				75F9B09820D2690900A198A4 /* grayStar.png */,
 				75942B2D1BED0D3A008A99F7 /* LaunchScreen.storyboard */,
 				75942B301BED0D3A008A99F7 /* Info.plist */,
 				75942B1F1BED0D3A008A99F7 /* Supporting Files */,
+				75F9B09320D2654F00A198A4 /* StarRatingView.h */,
+				75F9B09420D2654F00A198A4 /* StarRatingView.m */,
+				75F9B09A20D2734900A198A4 /* StarLayer.h */,
+				75F9B09B20D2734900A198A4 /* StarLayer.m */,
 			);
 			path = YHStarRatingDemo;
 			sourceTree = "<group>";
@@ -138,6 +158,14 @@
 				75942B461BED0D3A008A99F7 /* Info.plist */,
 			);
 			path = YHStarRatingDemoUITests;
+			sourceTree = "<group>";
+		};
+		75F9B09D20D2788300A198A4 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				75F9B09E20D2788400A198A4 /* CoreText.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -246,9 +274,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				75F9B09920D2690900A198A4 /* grayStar.png in Resources */,
 				75942B2F1BED0D3A008A99F7 /* LaunchScreen.storyboard in Resources */,
 				75942B2C1BED0D3A008A99F7 /* Assets.xcassets in Resources */,
 				75942B2A1BED0D3A008A99F7 /* Main.storyboard in Resources */,
+				75F9B09720D2690200A198A4 /* star.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -274,7 +304,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				75942B271BED0D3A008A99F7 /* ViewController.m in Sources */,
+				75F9B09520D2654F00A198A4 /* StarRatingView.m in Sources */,
 				75942B241BED0D3A008A99F7 /* AppDelegate.m in Sources */,
+				75F9B09C20D2734900A198A4 /* StarLayer.m in Sources */,
 				75942B211BED0D3A008A99F7 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -499,6 +531,7 @@
 				75942B4B1BED0D3A008A99F7 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		75942B4C1BED0D3A008A99F7 /* Build configuration list for PBXNativeTarget "YHStarRatingDemoTests" */ = {
 			isa = XCConfigurationList;
@@ -507,6 +540,7 @@
 				75942B4E1BED0D3A008A99F7 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		75942B4F1BED0D3A008A99F7 /* Build configuration list for PBXNativeTarget "YHStarRatingDemoUITests" */ = {
 			isa = XCConfigurationList;
@@ -515,6 +549,7 @@
 				75942B511BED0D3A008A99F7 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
