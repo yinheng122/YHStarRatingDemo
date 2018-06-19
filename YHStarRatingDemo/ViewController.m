@@ -23,10 +23,12 @@
     starRatingView.shouldUseAnimation = YES;
     [self.view addSubview:starRatingView];
     
-    StarLayer *starLayer = [[StarLayer alloc] initWithFrame:CGRectMake(100, 200, 100, 80)];
+    StarLayer *starLayer = [[StarLayer alloc] initWithFrame:CGRectMake(100, 200, 200, 80)];
     starLayer.spaceNum = 5;
+    starLayer.imageLayer = YES;
     starLayer.canDrag = YES;
     starLayer.currentScore = 2;
+    starLayer.wordFont = 30;
     starLayer.returnScoreBlock = ^(CGFloat score) {
         NSLog(@"%f", score);
     };

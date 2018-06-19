@@ -9,6 +9,7 @@
 #import "StarLayer.h"
 #import <CoreText/CoreText.h>
 #define starWidth self.bounds.size.width/_starCount
+#define imageStarWidth (_layerWidth - _spaceNum * (_starCount - 1))/_starCount
 @interface StarLayer()
 
 /**
@@ -41,6 +42,10 @@
  */
 @property (assign, nonatomic) CGFloat percentage;
 
+/**
+ * 储存设置的宽度
+ */
+@property (assign, nonatomic) CGFloat layerWidth;
 @end
 
 
@@ -63,14 +68,15 @@
 }
 
 - (void)buildUI{
-    _wordfont = 15;
+    _wordFont = 15;
     _starCount = 5;
     _currentScore = 0;
     _decimal = YES;
     _color = [UIColor redColor];
     _darkColor = [UIColor lightGrayColor];
     CGRect frame = self.frame;
-    frame.size.height = _wordfont;
+    _layerWidth = self.frame.size.width;
+    frame.size.height = _wordFont;
     frame.size.width = [self calculateRowWidth:@"★"] *_starCount + (_starCount - 1)* _spaceNum;
     self.frame = frame;
     [self buildStarLayer];
@@ -82,7 +88,7 @@
 }
 
 - (void)setWordfont:(CGFloat)wordfont{
-    _wordfont = wordfont;
+    _wordFont = wordfont;
     [self resetLayerFrame];
 }
 
@@ -152,26 +158,42 @@
     [self resetLayerFrame];
 }
 
+- (void)setImageLayer:(BOOL)imageLayer{
+    _imageLayer = imageLayer;
+    [self buildShapeLayer:self.Slayer color:nil];
+    [self buildShapeLayer:self.SlayerGray color:nil];
+    [self resetLayerFrame];
+}
+
 /**
  * 重新设置视图
  */
 - (void)resetLayerFrame{
-    CGRect frame = self.frame;
-    frame.size.height = [self calculateRowHeight:@"★"];
-    frame.size.width = [self calculateRowWidth:@"★"] *_starCount + (_starCount - 1)* _spaceNum;
-    self.frame = frame;
-    self.Rlayer.instanceTransform = CATransform3DMakeTranslation([self calculateRowWidth:@"★"] +_spaceNum, 0, 0);
-    self.RlayerGray.instanceTransform = CATransform3DMakeTranslation([self calculateRowWidth:@"★"] +_spaceNum, 0, 0);
+    if (self.imageLayer) {
+        CGRect frame = self.frame;
+        frame.size.height = _layerWidth;
+        frame.size.width = _layerWidth;
+        self.frame = frame;
+        self.Rlayer.instanceTransform = CATransform3DMakeTranslation(imageStarWidth +_spaceNum, 0, 0);
+        self.RlayerGray.instanceTransform = CATransform3DMakeTranslation(imageStarWidth +_spaceNum, 0, 0);
+    }else{
+        CGRect frame = self.frame;
+        frame.size.height = [self calculateRowHeight:@"★"];
+        frame.size.width = [self calculateRowWidth:@"★"] *_starCount + (_starCount - 1)* _spaceNum;
+        self.frame = frame;
+        self.Rlayer.instanceTransform = CATransform3DMakeTranslation([self calculateRowWidth:@"★"] +_spaceNum, 0, 0);
+        self.RlayerGray.instanceTransform = CATransform3DMakeTranslation([self calculateRowWidth:@"★"] +_spaceNum, 0, 0);
+        self.Slayer.path = [self bezierPathWithText:@"★" attributes:@{NSFontAttributeName : [UIFont systemFontOfSize:_wordFont]}].CGPath;
+        self.SlayerGray.path = [self bezierPathWithText:@"★" attributes:@{NSFontAttributeName : [UIFont systemFontOfSize:_wordFont]}].CGPath;
+        self.Slayer.frame = CGRectMake(0, -_wordFont/4.f, starWidth, self.bounds.size.height);
+        self.SlayerGray.frame = CGRectMake(0, -_wordFont/4.f, starWidth, self.bounds.size.height);
+        self.Slayer.strokeColor = _color.CGColor;
+        self.Slayer.fillColor = _color.CGColor;
+        self.SlayerGray.strokeColor = _darkColor.CGColor;
+        self.SlayerGray.fillColor = _darkColor.CGColor;
+    }
     self.Rlayer.instanceCount = _starCount;
     self.RlayerGray.instanceCount = _starCount;
-    self.Slayer.path = [self bezierPathWithText:@"★" attributes:@{NSFontAttributeName : [UIFont systemFontOfSize:_wordfont]}].CGPath;
-    self.SlayerGray.path = [self bezierPathWithText:@"★" attributes:@{NSFontAttributeName : [UIFont systemFontOfSize:_wordfont]}].CGPath;
-    self.Slayer.frame = CGRectMake(0, -_wordfont/4.f, starWidth, self.bounds.size.height);
-    self.SlayerGray.frame = CGRectMake(0, -_wordfont/4.f, starWidth, self.bounds.size.height);
-    self.Slayer.strokeColor = _color.CGColor;
-    self.Slayer.fillColor = _color.CGColor;
-    self.SlayerGray.strokeColor = _darkColor.CGColor;
-    self.SlayerGray.fillColor = _darkColor.CGColor;
 }
 
 - (void)buildStarLayer{
@@ -198,18 +220,37 @@
 }
 
 - (void)buildReplicatorLayer:(CAReplicatorLayer *)rlayer{
-    rlayer.frame = CGRectMake(0, 0, self.bounds.size.width, self.bounds.size.height);
+    rlayer.frame = CGRectMake(0, 0, _layerWidth, imageStarWidth);
     rlayer.instanceCount = _starCount;
-    rlayer.instanceTransform = CATransform3DMakeTranslation([self calculateRowWidth:@"★"] + _spaceNum, 0, 0);
+    if (_imageLayer) {
+        rlayer.instanceTransform = CATransform3DMakeTranslation(imageStarWidth + _spaceNum, 0, 0);
+    }else{
+        rlayer.instanceTransform = CATransform3DMakeTranslation([self calculateRowWidth:@"★"] + _spaceNum, 0, 0);
+    }
+    
     [self.layer addSublayer:rlayer];
 }
 
 - (void)buildShapeLayer:(CAShapeLayer *)slayer color:(UIColor *)color{
-    slayer.frame = CGRectMake(0, -_wordfont/4.f, starWidth, self.bounds.size.height);
-    slayer.path = [self bezierPathWithText:@"★" attributes:@{NSFontAttributeName : [UIFont systemFontOfSize:_wordfont]}].CGPath;
-    slayer.geometryFlipped = YES;
-    slayer.strokeColor = color.CGColor;
-    slayer.fillColor = color.CGColor;
+    if (_imageLayer) {
+        slayer.frame = CGRectMake(0, 0, imageStarWidth, imageStarWidth);
+        UIImageView *imageView = [[UIImageView alloc] init];
+        imageView.frame = CGRectMake(0, 0, imageStarWidth, imageStarWidth);
+        if ([slayer isEqual:self.Slayer]) {
+            imageView.image = [UIImage imageNamed:@"star"];
+        }else{
+            imageView.image = [UIImage imageNamed:@"grayStar"];
+        }
+        slayer.path = nil;
+        slayer.geometryFlipped = NO;
+        [slayer addSublayer:imageView.layer];
+    }else{
+        slayer.frame = CGRectMake(0, -_wordFont/4.f, starWidth, self.bounds.size.height);
+        slayer.path = [self bezierPathWithText:@"★" attributes:@{NSFontAttributeName : [UIFont systemFontOfSize:_wordFont]}].CGPath;
+        slayer.geometryFlipped = YES;
+        slayer.strokeColor = color.CGColor;
+        slayer.fillColor = color.CGColor;
+    }
 }
 
 - (void)tapTheStar:(UITapGestureRecognizer *)recognizer{
@@ -290,16 +331,16 @@
 
 - (CGFloat)calculateRowWidth:(NSString *)string {
     // 指定字号
-    NSDictionary *dic = @{NSFontAttributeName:[UIFont systemFontOfSize:_wordfont]};
+    NSDictionary *dic = @{NSFontAttributeName:[UIFont systemFontOfSize:_wordFont]};
     // 计算宽度时要确定高度
-    CGRect rect = [string boundingRectWithSize:CGSizeMake(0, _wordfont) options:NSStringDrawingUsesLineFragmentOrigin |
+    CGRect rect = [string boundingRectWithSize:CGSizeMake(0, _wordFont) options:NSStringDrawingUsesLineFragmentOrigin |
                    NSStringDrawingUsesFontLeading attributes:dic context:nil];
     return rect.size.width;
 }
 
 - (CGFloat)calculateRowHeight:(NSString *)string{
     // 指定字号
-    NSDictionary *dic = @{NSFontAttributeName:[UIFont systemFontOfSize:_wordfont]};
+    NSDictionary *dic = @{NSFontAttributeName:[UIFont systemFontOfSize:_wordFont]};
     // 计算高度要先指定宽度
     CGRect rect = [string boundingRectWithSize:CGSizeMake([self calculateRowWidth:@"★"], 0)/*计算高度要先指定宽度*/ options:NSStringDrawingUsesLineFragmentOrigin |
                    NSStringDrawingUsesFontLeading attributes:dic context:nil];

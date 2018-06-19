@@ -5,7 +5,11 @@
 //  Created by yinheng on 2018/6/14.
 //  Copyright © 2018年 yinheng. All rights reserved.
 //
-
+/**
+ * 星星控件
+ * veriosn 1.0
+ * xcode 9.3
+ */
 #import <UIKit/UIKit.h>
 
 @interface StarLayer : UIView
@@ -48,12 +52,16 @@
 /**
  * 文字大小，视图根据文字大小确定高宽 (默认15)
  */
-@property (assign, nonatomic) CGFloat wordfont;
+@property (assign, nonatomic) CGFloat wordFont;
 
 /**
  * 星星之间的间距 (默认0)
  */
 @property (assign, nonatomic) NSInteger spaceNum;
 
+/**
+ * 是否是用image做图层 (默认是文字贝塞尔)
+ */
+@property (assign, nonatomic) BOOL imageLayer;
 
 @end
